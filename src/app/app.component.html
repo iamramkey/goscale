@@ -1,5 +1,12 @@
-<table class="table table-responsive table-bordered table-hover">
-  <tr>
-    <td>Rama Krishna</td>
-  </tr>
-</table>
+<toaster-container></toaster-container>
+<app-loader [loading]="AppLoaderService.loading"></app-loader>
+<div id="toasterContainer">
+  <toaster-container [toasterconfig]="AppToasterService.configToaster"></toaster-container>
+</div>
+<div id="app-main">
+  <app-header></app-header>
+  <!-- <app-content></app-content> -->
+  <router-outlet></router-outlet>
+
+  <app-footer></app-footer>
+</div>

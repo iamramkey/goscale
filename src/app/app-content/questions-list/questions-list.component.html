@@ -1,0 +1,42 @@
+<ng-container *ngIf="questionsResponse$ | async as questionsListResponse; else loading">
+  <ng-container *ngIf="questionsListResponse | deepFind: QUESTIONS_RESPONSE_KEYS?.LIST as questionsList; else noData">
+    <ng-container *ngIf="questionsList?.length > 0; else noData">
+      <div class="container-fluid">
+        <div *ngFor="let question of questionsList; trackBy: index" class="question-row">
+          <ng-container
+            *ngIf="
+              (question | deepFind: QUESTIONS_RESPONSE_KEYS?.TEXT | safe: 'html') &&
+              (question | deepFind: QUESTIONS_RESPONSE_KEYS?.ID)?.length > 0
+            "
+          >
+            <span class="pull-left voting-count voting-up-count">
+              <span class="glyphicon glyphicon-triangle-top" (click)="upVote(question)"></span>
+              {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.UP_VOTES) || '0' }}
+            </span>
+            <span class="pull-left voting-count voting-down-count">
+              <span class="glyphicon glyphicon-triangle-bottom" (click)="downVote(question)"></span>
+              {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.DOWN_VOTES) || '0' }}
+            </span>
+            <div class="pull-left question-text">
+              <div
+                class="question-link"
+                [innerHTML]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.TEXT | safe: 'html'"
+                (click)="showDetails(question)"
+              ></div>
+            </div>
+            <div class="clearfix"></div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <app-loader [loading]="true"></app-loader>
+</ng-template>
+<ng-template #noData>
+  <div class="alert alert-info">
+    No Questions Available at this moment. Please come back and try again...
+  </div>
+</ng-template>
