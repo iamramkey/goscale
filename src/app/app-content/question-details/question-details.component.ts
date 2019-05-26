@@ -224,6 +224,10 @@ export class QuestionDetailsComponent implements OnInit, OnDestroy {
     this.answersList.push(answerObject);
   }
 
+  public trackByFunction(index) {
+    return index;
+  }
+
   public ngOnDestroy() {
     this.routeParamsSubscription.unsubscribe();
     UNSUBSCRIBE(this.answersListSubscription);

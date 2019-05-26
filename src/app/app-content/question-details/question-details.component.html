@@ -57,7 +57,7 @@
     <fieldset class="question-detail">
       <legend class="question-detail">Answers:</legend>
 
-      <div *ngFor="let answer of answersList; trackBy: index">
+      <div *ngFor="let answer of answersList; trackBy: trackByFunction">
         <div class="col-xs-2">
           <div class="votest-container upvotes text-center col-xs-6">
             <p class="glyphicon glyphicon-triangle-top"></p>
@@ -146,7 +146,7 @@
 
       <h4>Your Answer :</h4>
       <div class="answer-errors">
-        <div class="alert alert-danger" *ngFor="let error of newAnswerErrors; trackBy: index">
+        <div class="alert alert-danger" *ngFor="let error of newAnswerErrors; trackBy: trackByFunction">
           <span class="glyphicon glyphicon-exclamation-sign"></span>
           {{ error }}
         </div>
