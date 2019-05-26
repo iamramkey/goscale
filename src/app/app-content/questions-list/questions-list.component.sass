@@ -6,7 +6,7 @@
     margin-left: 10px;
 
     .glyphicon
-      &:hover
+      &:hover, &.down-voted
         color: #f60;
   
   .glyphicon
@@ -14,7 +14,7 @@
     display: block;
     cursor: pointer;
 
-  &:not(.voting-down-count) .glyphicon:hover
+  &:not(.voting-down-count) .glyphicon:hover, & .glyphicon.up-voted
     color: #0a0;
 
 .question-row

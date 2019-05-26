@@ -10,11 +10,29 @@
             "
           >
             <span class="pull-left voting-count voting-up-count">
-              <span class="glyphicon glyphicon-triangle-top" (click)="upVote(question)"></span>
+              <span
+                class="glyphicon glyphicon-triangle-top"
+                (click)="upVote(question)"
+                [attr.title]="
+                  (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED)
+                    ? QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED_BY_YOU
+                    : QUESTIONS_RESPONSE_KEYS?.QUESTION_IS_APPROPRIATE
+                "
+                [class.up-voted]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED"
+              ></span>
               {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.UP_VOTES) || '0' }}
             </span>
             <span class="pull-left voting-count voting-down-count">
-              <span class="glyphicon glyphicon-triangle-bottom" (click)="downVote(question)"></span>
+              <span
+                class="glyphicon glyphicon-triangle-bottom"
+                (click)="downVote(question)"
+                [attr.title]="
+                  (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED)
+                    ? QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED_BY_YOU
+                    : QUESTIONS_RESPONSE_KEYS?.QUESTION_NOT_PROPER
+                "
+                [class.down-voted]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED"
+              ></span>
               {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.DOWN_VOTES) || '0' }}
             </span>
             <div class="pull-left question-text">

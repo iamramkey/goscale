@@ -1,3 +1,10 @@
+/**
+ * @author Sampat
+ * @email iamramkey10@gmail.com
+ * @create date 2019-05-26 18:22:14
+ * @modify date 2019-05-26 18:22:14
+ * @desc [Application level routing constants file]
+ */
 import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppContentComponent } from './app-content/app-content.component';
@@ -9,8 +16,13 @@ import { APP_ROUTING_PATHS } from './services/AppConstants';
 const routes: Routes = [
   {
     path: APP_ROUTING_PATHS.ROOT_PATH,
+    redirectTo: APP_ROUTING_PATHS.APP_PATH,
+    pathMatch: 'full'
+  },
+  {
+    path: APP_ROUTING_PATHS.APP_PATH,
     component: AppContentComponent,
-    data: { title: 'Questions & Answers Service' },
+    data: { title: '' },
     children: [
       {
         path: '',

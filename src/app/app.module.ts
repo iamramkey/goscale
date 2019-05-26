@@ -1,9 +1,18 @@
+/**
+ * @author Sampat
+ * @email iamramkey10@gmail.com
+ * @create date 2019-05-26 18:21:14
+ * @modify date 2019-05-26 18:21:14
+ * @desc [Main App Module]
+ */
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { NgxLoadingModule } from 'ngx-loading';
+import { QuillModule } from 'ngx-quill';
 import { AppContentComponent } from './app-content/app-content.component';
 import { QuestionDetailsComponent } from './app-content/question-details/question-details.component';
 import { QuestionsListComponent } from './app-content/questions-list/questions-list.component';
@@ -17,6 +26,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ReadNestedPropertyPipe } from './pipes/deep-find.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { AppTitleService } from './services/title.service';
 
 @NgModule({
   declarations: [
@@ -37,9 +47,12 @@ import { SafePipe } from './pipes/safe.pipe';
     NgxLoadingModule.forRoot({}),
     ToasterModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    QuillModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  providers: [ToasterService, AppContentService, AppContent],
+  providers: [ToasterService, AppContentService, AppContent, AppTitleService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,3 +1,171 @@
-{{ question | json }}
+<div class="container-fluid">
+  <div class="col-xs-9">
+    <ng-container *ngIf="question | deepFind: QUESTIONS_RESPONSE_KEYS?.TEXT | safe: 'html'; else noData">
+      <fieldset class="question-detail">
+        <legend class="question-detail">Question:</legend>
+        <div [innerHTML]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.TEXT | safe: 'html'"></div>
+      </fieldset>
+    </ng-container>
+  </div>
+  <div class="col-xs-3">
+    <div class="votest-container upvotes text-center">
+      <span
+        class="glyphicon glyphicon-triangle-top"
+        [class.up-voted]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED"
+      ></span>
+      <span class="votes-count">
+        {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.UP_VOTES) || '0' }}
+      </span>
+      <button
+        class="btn btn-success btn-block"
+        (click)="upVote(question)"
+        [attr.title]="
+          (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED)
+            ? QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED_BY_YOU
+            : QUESTIONS_RESPONSE_KEYS?.QUESTION_IS_APPROPRIATE
+        "
+      >
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        Was this question helpful ?
+      </button>
+    </div>
+    <div class="votest-container downvotes text-center">
+      <span
+        class="glyphicon glyphicon-triangle-bottom"
+        [class.down-voted]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED"
+      ></span>
+      <span class="votes-count">
+        {{ (question | deepFind: QUESTIONS_RESPONSE_KEYS?.DOWN_VOTES) || '0' }}
+      </span>
+      <button
+        class="btn btn-warning btn-block"
+        (click)="downVote(question)"
+        [attr.title]="
+          (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED)
+            ? QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED_BY_YOU
+            : QUESTIONS_RESPONSE_KEYS?.QUESTION_NOT_PROPER
+        "
+      >
+        <span class="glyphicon glyphicon-thumbs-down"></span>
+        Not a proper question
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="col-xs-12">
+    <fieldset class="question-detail">
+      <legend class="question-detail">Answers:</legend>
 
-{{ answersList$ | async | json }}
+      <div *ngFor="let answer of answersList; trackBy: index">
+        <div class="col-xs-2">
+          <div class="votest-container upvotes text-center col-xs-6">
+            <p class="glyphicon glyphicon-triangle-top"></p>
+            <p class="votes-count">
+              {{ (answer | deepFind: QUESTIONS_RESPONSE_KEYS?.UP_VOTES) || '0' }}
+            </p>
+          </div>
+          <div class="votest-container downvotes text-center col-xs-6">
+            <p class="glyphicon glyphicon-triangle-bottom"></p>
+            <p class="votes-count">
+              {{ (answer | deepFind: QUESTIONS_RESPONSE_KEYS?.DOWN_VOTES) || '0' }}
+            </p>
+          </div>
+        </div>
+        <div class="col-xs-10" [innerHTML]="answer | deepFind: ANSWER_RESPONSE_KEYS?.ANSWER | safe: 'html'"></div>
+        <div class="clearfix"></div>
+        <div class="pull-right created-by-container">
+          <div
+            class="col-xs-3 avatar-container"
+            *ngIf="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.AVATAR"
+          >
+            <img
+              [src]="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.AVATAR"
+              class="answer-avatar"
+              alt="answer avatar"
+            />
+          </div>
+          <div
+            class=" answer-creator"
+            [ngClass]="[
+              !(answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.AVATAR)
+                ? 'col-xs-9 col-xs-offset-3'
+                : 'col-xs-9'
+            ]"
+          >
+            <ng-container
+              *ngIf="
+                answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.NAME;
+                else simpleCreatedBy
+              "
+            >
+              <p
+                class="person-name"
+                [attr.title]="
+                  (answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.NAME) +
+                  ' ' +
+                  (answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.SURNAME)
+                "
+                *ngIf="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.NAME"
+              >
+                {{
+                  (answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.NAME) +
+                    ' ' +
+                    (answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY | deepFind: ANSWER_RESPONSE_KEYS?.SURNAME)
+                }}
+              </p>
+              <p
+                class="created-date"
+                [attr.title]="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT | date: 'medium'"
+                *ngIf="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT"
+              >
+                {{ answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT | date: 'medium' }}
+              </p>
+            </ng-container>
+            <ng-template #simpleCreatedBy>
+              <p
+                class="person-name"
+                *ngIf="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY"
+                [attr.title]="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY"
+              >
+                {{ answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_BY }}
+              </p>
+              <p
+                class="created-date"
+                *ngIf="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT"
+                [attr.title]="answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT | date: 'medium'"
+              >
+                {{ answer | deepFind: ANSWER_RESPONSE_KEYS?.CREATED_AT | date: 'medium' }}
+              </p>
+            </ng-template>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+      </div>
+
+      <h4>Your Answer :</h4>
+      <div class="answer-errors">
+        <div class="alert alert-danger" *ngFor="let error of newAnswerErrors; trackBy: index">
+          <span class="glyphicon glyphicon-exclamation-sign"></span>
+          {{ error }}
+        </div>
+      </div>
+      <quill-editor name="newAnswerControl" [formControl]="newAnswerControl"></quill-editor>
+      <div class="pull-right submit-answer-container">
+        <button class="btn btn-primary btn-lg" [disabled]="!newAnswerControl?.valid" (click)="saveAnswer()">
+          Submit your answer
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </fieldset>
+  </div>
+</div>
+
+<app-loader [loading]="answersListLoading"></app-loader>
+
+<ng-template #noData>
+  <div class="alert alert-info">
+    No Questions Available at this moment. Please come back and try again...
+  </div>
+</ng-template>
