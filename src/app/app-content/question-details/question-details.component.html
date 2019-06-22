@@ -19,6 +19,7 @@
       <button
         class="btn btn-success btn-block"
         (click)="upVote(question)"
+        [disabled]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED"
         [attr.title]="
           (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED)
             ? QUESTIONS_RESPONSE_KEYS?.QUESTION_UP_VOTED_BY_YOU
@@ -40,6 +41,7 @@
       <button
         class="btn btn-warning btn-block"
         (click)="downVote(question)"
+        [disabled]="question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED"
         [attr.title]="
           (question | deepFind: QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED)
             ? QUESTIONS_RESPONSE_KEYS?.QUESTION_DOWN_VOTED_BY_YOU

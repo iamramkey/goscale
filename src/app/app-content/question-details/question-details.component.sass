@@ -13,15 +13,21 @@ legend.question-detail
   padding: 0 10px;
   border-bottom: none;
 
+.btn.btn-block
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 .submit-answer-container
   margin-top: 20px;
 
 .glyphicon.up-voted
   color: #0a0;
+  cursor: not-allowed;
 
 .glyphicon
   &.down-voted
     color: #f60;
+    cursor: not-allowed;
 
 .answer-avatar
   height: 40px;
@@ -39,3 +45,4 @@ legend.question-detail
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+

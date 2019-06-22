@@ -8,6 +8,9 @@
     .glyphicon
       &:hover, &.down-voted
         color: #f60;
+        
+      &.down-voted
+        cursor: not-allowed;
   
   .glyphicon
     font-size: 24px;
@@ -16,6 +19,9 @@
 
   &:not(.voting-down-count) .glyphicon:hover, & .glyphicon.up-voted
     color: #0a0;
+  
+  & .glyphicon.up-voted
+    cursor: not-allowed;
 
 .question-row
   border-bottom: 1px solid #ccc;

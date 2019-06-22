@@ -63,13 +63,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   public upVote(question: IQuestion) {
-    // this function updates the questions upvotes and this is toggleable for a single user
-    if (question.upVoted) {
-      question.upvotes = (+(question.upvotes || 0) - 1).toString();
-      question.upVoted = false;
-      this.copyQuestionAndUpdateModel(question);
-      return;
-    }
+    // this function updates the questions upvotes
     if (question.downVoted) {
       question.downvotes = (+(question.downvotes || 0) - 1).toString();
       question.downVoted = false;
@@ -80,13 +74,7 @@ export class QuestionsListComponent implements OnInit {
   }
 
   public downVote(question: IQuestion) {
-    // this function updates the downvotes and check also this is toggleable for a single user
-    if (question.downVoted) {
-      question.downvotes = (+(question.downvotes || 0) - 1).toString();
-      question.downVoted = false;
-      this.copyQuestionAndUpdateModel(question);
-      return;
-    }
+    // this function updates the downvotes
     if (question.upVoted) {
       question.upvotes = (+(question.upvotes || 0) - 1).toString();
       question.upVoted = false;
